@@ -1,0 +1,20 @@
+// Download every image from https://helldivers.fandom.com/wiki/Stratagems_(Helldivers_2)
+
+var elementsLi = document.querySelectorAll('td[width]');
+for (const el of elementsLi) {
+  var imgs = el.querySelectorAll('img');
+  for (const i of imgs) {
+    await new Promise((resolve) => {
+      setTimeout(resolve, Math.random() * 1000);
+    });
+    const response = await fetch(i.src);
+    const blob = await response.blob();
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    var fileName = i.getAttribute('alt');
+    link.href = url;
+    link.download = fileName;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+}
